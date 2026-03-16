@@ -1,5 +1,9 @@
 FROM maven:3.9-amazoncorretto-25 AS build
 
+EXPOSE 8090
+
+RUN yum install -y util-linux && yum clean all
+
 WORKDIR /app
 
 COPY pom.xml .
