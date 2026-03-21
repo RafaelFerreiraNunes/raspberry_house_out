@@ -1,0 +1,16 @@
+services:
+  led-service:
+    build: .
+    image: raspberry-out:1.0
+    container_name: app-led
+
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    devices:
+      - "/dev/gpiochip0:/dev/gpiochip0"
+    privileged: true
+
+    restart: always
+
+    environment:
+      - SERVER_PORT=${APP_PORT}
