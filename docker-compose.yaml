@@ -1,16 +1,22 @@
 services:
   led-service:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: raspberry-out:1.0
     container_name: app-led
-
     ports:
       - "${APP_PORT}:${APP_PORT}"
     devices:
       - "/dev/gpiochip0:/dev/gpiochip0"
-    privileged: true
-
     restart: always
-
     environment:
       - SERVER_PORT=${APP_PORT}
+    volumes:
+      - ./log/app-led:/app/logs
+    networks:
+      - rpi-network
+
+networks:
+  rpi-network:
+    driver: bridge
