@@ -5,6 +5,10 @@ spring:
 server:
   port: ${SERVER_PORT:8090}
 
+grpc:
+  server:
+    port: 9090
+
 #logging:
 #  file:
 #    name: /app/logs/raspberry-house.log
