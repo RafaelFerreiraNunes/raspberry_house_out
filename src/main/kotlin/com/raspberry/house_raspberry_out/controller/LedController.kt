@@ -18,7 +18,7 @@ class LedController(
         val posLed = led.toIntOrNull() ?: return "Error - requisição precisa ser do tipo numérico"
 
         if (posLed >= 0 && posLed <= ledService.pins.size) {
-            ledService.changeStatusLed(posLed)
+            ledService.changeStatus(posLed)
             return ""
         } else {
             return "Error - Led inválido"

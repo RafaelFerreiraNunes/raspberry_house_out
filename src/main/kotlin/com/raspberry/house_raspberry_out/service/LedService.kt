@@ -19,7 +19,7 @@ class LedService {
         }
     }
 
-    fun changeStatusLed(led: Int) {
+    fun changeStatus(led: Int) {
         leds[led -1].toggle()
         logger.info("Led $led changed")
     }

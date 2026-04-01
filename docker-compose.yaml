@@ -7,11 +7,13 @@ services:
     container_name: app-led
     ports:
       - "${APP_PORT}:${APP_PORT}"
+      - "9090:9090"
     devices:
       - "/dev/gpiochip0:/dev/gpiochip0"
     restart: always
     environment:
       - SERVER_PORT=${APP_PORT}
+      - LOG_PATH=/app/logs
     volumes:
       - ./log/app-led:/app/logs
     networks:

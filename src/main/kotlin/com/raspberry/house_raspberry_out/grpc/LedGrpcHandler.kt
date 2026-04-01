@@ -5,11 +5,11 @@ import com.raspberry.house_raspberry_out.service.LedService
 
 @GrpcService
 class LedGrpcHandler(
-    private val hardwareService: LedService
+    private val ledService: LedService
 ) : LedServiceGrpcKt.LedServiceCoroutineImplBase() {
 
     override suspend fun changeStatus(request: LedRequest): LedResponse {
-        hardwareService.changeStatusLed(request.ledId)
+        ledService.changeStatus(request.ledId)
 
         return LedResponse.newBuilder()
             .setSuccess(true)

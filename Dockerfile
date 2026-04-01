@@ -1,7 +1,5 @@
 FROM maven:3.9-amazoncorretto-25 AS build
 
-EXPOSE 8090
-
 RUN yum install -y util-linux && yum clean all
 
 WORKDIR /app
@@ -15,9 +13,10 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 FROM amazoncorretto:25-al2023
-
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8090
+EXPOSE 9090
 
+COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
