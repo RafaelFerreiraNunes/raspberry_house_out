@@ -21,7 +21,7 @@ services:
 
   app-botao:
     build:
-      context: ../house_raspberry
+      context: ../raspberry_house
       dockerfile: Dockerfile
     image: raspberry-in:1.0
     container_name: app-botao
@@ -31,6 +31,8 @@ services:
     environment:
       - APP_COMMUNICATION_TYPE=${COMM_TYPE:?A variavel COMM_TYPE (rest ou grpc) e obrigatoria}
       - LED_SERVICE_URL=app-led
+      - APP_LED_URL=http://app-led:8090
+      - GRPC_LED_HOST=app-led
     devices:
       - "/dev/gpiochip4:/dev/gpiochip4" # Botões costumam estar no chip4 ou 0 no RPi 5
     volumes:

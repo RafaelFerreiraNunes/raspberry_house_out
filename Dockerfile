@@ -12,8 +12,6 @@ RUN mvn package -DskipTests
 
 FROM amazoncorretto:25-al2023
 
-RUN yum install -y libgpiod && yum clean all
-
 WORKDIR /app
 
 EXPOSE 8090
