@@ -5,14 +5,15 @@ RUN yum install -y util-linux && yum clean all
 WORKDIR /app
 
 COPY pom.xml .
-
 RUN mvn dependency:go-offline
 
 COPY src ./src
-
 RUN mvn package -DskipTests
 
 FROM amazoncorretto:25-al2023
+
+RUN yum install -y libgpiod && yum clean all
+
 WORKDIR /app
 
 EXPOSE 8090

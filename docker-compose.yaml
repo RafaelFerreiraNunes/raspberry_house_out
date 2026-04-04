@@ -1,5 +1,5 @@
 services:
-  led-service:
+  app-led:
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,6 +16,25 @@ services:
       - LOG_PATH=/app/logs
     volumes:
       - ./log/app-led:/app/logs
+    networks:
+      - rpi-network
+
+  app-botao:
+    build:
+      context: ../house_raspberry
+      dockerfile: Dockerfile
+    image: raspberry-in:1.0
+    container_name: app-botao
+    depends_on:
+      - app-led
+    restart: always
+    environment:
+      - APP_COMMUNICATION_TYPE=${COMM_TYPE:?A variavel COMM_TYPE (rest ou grpc) e obrigatoria}
+      - LED_SERVICE_URL=app-led
+    devices:
+      - "/dev/gpiochip4:/dev/gpiochip4" # Botões costumam estar no chip4 ou 0 no RPi 5
+    volumes:
+      - ./log/app-botao:/app/logs
     networks:
       - rpi-network
 
