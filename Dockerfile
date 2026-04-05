@@ -10,7 +10,12 @@ RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn package -DskipTests
 
-FROM amazoncorretto:25-al2023
+FROM eclipse-temurin:25-jdk-noble
+
+RUN apt-get update && apt-get install -y \
+    libgpiod-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
