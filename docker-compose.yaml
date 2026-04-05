@@ -14,11 +14,9 @@ services:
       - "/dev/gpiochip0:/dev/gpiochip0"
     restart: always
     environment:
-      - SERVER_PORT=${APP_PORT}
-      - LOG_PATH=/app/logs
-      - JAVA_TOOL_OPTIONS=--enable-native-access=ALL-UNNAMED
-      - DIOZERO_DEVICE_FACTORY=com.diozero.internal.provider.gpiod.GpiodDeviceFactory
-      - DIOZERO_GPIO_CHIP=0
+      SERVER_PORT: ${APP_PORT}
+      LOG_PATH: /app/logs
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED --add-opens=jdk.unsupported/sun.misc=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dsun.misc.Unsafe.allowPrivilegedAccess=true"
     volumes:
       - ./log/app-led:/app/logs
       - /dev:/dev
@@ -44,13 +42,11 @@ services:
         condition: service_healthy
     restart: always
     environment:
-      - APP_COMMUNICATION_TYPE=${COMM_TYPE:?A variavel COMM_TYPE (rest ou grpc) e obrigatoria}
-      - LED_SERVICE_URL=app-led
-      - APP_LED_URL=http://app-led:8090
-      - GRPC_LED_HOST=app-led
-      - JAVA_TOOL_OPTIONS=--enable-native-access=ALL-UNNAMED
-      - DIOZERO_DEVICE_FACTORY=com.diozero.internal.provider.gpiod.GpiodDeviceFactory
-      - DIOZERO_GPIO_CHIP=0
+      APP_COMMUNICATION_TYPE: ${COMM_TYPE:?A variavel COMM_TYPE (rest ou grpc) e obrigatoria}
+      LED_SERVICE_URL: app-led
+      APP_LED_URL: http://app-led:8090
+      GRPC_LED_HOST: app-led
+      JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED --add-opens=jdk.unsupported/sun.misc=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dsun.misc.Unsafe.allowPrivilegedAccess=true"
     privileged: true
     devices:
       - "/dev/gpiochip0:/dev/gpiochip4"
