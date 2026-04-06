@@ -18,7 +18,7 @@ services:
       LOG_PATH: /app/logs
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED --add-opens=jdk.unsupported/sun.misc=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dsun.misc.Unsafe.allowPrivilegedAccess=true"
     volumes:
-      - ./log/app-led:/app/logs
+      - ../log/app-led:/app/logs
       - /dev:/dev
       - /sys:/sys:ro
       - /sys/firmware/devicetree/base:/proc/device-tree:ro
@@ -37,6 +37,8 @@ services:
       dockerfile: Dockerfile
     image: raspberry-in:1.0
     container_name: app-botao
+    ports:
+      - "8081:8080"
     depends_on:
       app-led:
         condition: service_healthy
@@ -46,13 +48,14 @@ services:
       LED_SERVICE_URL: app-led
       APP_LED_URL: http://app-led:8090
       GRPC_LED_HOST: app-led
+      LOG_PATH: /app/logs
       JAVA_TOOL_OPTIONS: "--enable-native-access=ALL-UNNAMED --add-opens=jdk.unsupported/sun.misc=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Dsun.misc.Unsafe.allowPrivilegedAccess=true"
     privileged: true
     devices:
       - "/dev/gpiochip0:/dev/gpiochip4"
       - "/dev/gpiochip0:/dev/gpiochip0"
     volumes:
-      - ./log/app-botao:/app/logs
+      - ../log/app-botao:/app/logs
       - /dev:/dev
       - /sys:/sys:ro
       - /sys/firmware/devicetree/base:/proc/device-tree:ro
